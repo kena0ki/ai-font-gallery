@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="100%" height="100%" filter="url(#wood-texture)"/>
+
+  <defs>
+    <filter id="wood-texture" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.002 0.02" numOctaves="5" seed="1" stitchTiles="stitch" result="turbulence"/>
+      <feDiffuseLighting surfaceScale="0.3" diffuseConstant="3.1" lighting-color="#C9AA7D" in="turbulence" result="diffuseLighting">
+            <feDistantLight azimuth="100" elevation="17"/>
+        </feDiffuseLighting>
+      <feComposite in="diffuseLighting" in2="SourceGraphic" operator="in" result="composite"/>
+      <!--
+        <feMerge>
+            <feMergeNode in="composite"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      -->
+    </filter>
+  </defs>
+</svg>

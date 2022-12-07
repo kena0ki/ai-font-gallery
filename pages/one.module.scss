@@ -1,0 +1,40 @@
+.container {
+  padding: 0 2rem;
+}
+
+.title {
+  margin: 1rem 0;
+  line-height: 1.15;
+  font-size: var(--size-big);
+  text-align: center;
+}
+
+.description {
+  margin: 1rem 0;
+  line-height: 1.5;
+  font-size: var(--size-medium);
+}
+
+.button {
+  margin: 2rem 0;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card,
+  .footer {
+    border-color: #222;
+  }
+  .code {
+    background: #111;
+  }
+  .logo img {
+    filter: invert(1);
+  }
+}

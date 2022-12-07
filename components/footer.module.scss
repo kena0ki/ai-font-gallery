@@ -1,0 +1,16 @@
+.footer {
+  height: 1rem;
+  display: flex;
+  padding: 0.5rem 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftMargin {
+  flex-grow: 1;
+}
+
+.signature {
+  margin: 0 1rem;
+  font-size: var(--size-tiny);
+}
