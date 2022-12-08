@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from './one.module.scss';
+import styles from './1st.module.scss';
 import Layout from '../components/layout';
 import Button from '../components/button';
 
@@ -18,7 +18,7 @@ export default function Home() {
       <h1 className={styles.title}>{title}</h1>
       <p className={styles.description}>{description}</p>
       <div className={styles.button}>
-        <Link href="/two">
+        <Link href="/2nd">
           <Button>Try it!</Button>
         </Link>
       </div>

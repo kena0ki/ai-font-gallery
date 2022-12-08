@@ -6,11 +6,11 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/one',
+        destination: '/1st',
         permanent: true,
       },
-    ]
+    ];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

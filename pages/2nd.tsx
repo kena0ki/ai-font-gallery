@@ -1,4 +1,4 @@
-import styles from './two.module.scss';
+import styles from './2nd.module.scss';
 import Layout from '../components/layout';
 import Button from '../components/button';
 
