@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "no-unused-vars": "warn",
+    "semi": ["warn", "always"]
+  },
+  "globals": {
+    "React": "readonly"
+  }
 }

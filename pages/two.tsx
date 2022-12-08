@@ -1,27 +1,25 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from './one.module.scss';
+import styles from './two.module.scss';
 import Layout from '../components/layout';
 import Button from '../components/button';
 
+const texts = {
+  instruction:`生成の元となる画像を６枚アップロードしてください`,
+  note:`生成の元となる画像を６枚アップロードしてください`,
+};
+
 export default function Home() {
 
-  const title=`-  AI Font Demo  -`
-  const description=
-`AIにより自動生成されたフォントを眺めて楽しむサイトです。
-生成で参照するフォントは数枚程度です。`
-  const disclaimer1= `現状では`
-  const disclaimer2= `FTransGAN`
-  const disclaimer3= `というAIのモデルにより生成を行います。`
+  const {instruction, note} =texts;
 
   return (
     <Layout>
-      <h1 className={styles.title}>{title}</h1>
-      <p className={styles.description}>{description}</p>
-      <div className={styles.button}>
-        <Button>Try it!</Button>
+      <div className={styles.uploadArea}>
+        <p className={styles.instruction}>{instruction}</p>
       </div>
-      <p>{disclaimer1}<a>{disclaimer2}</a>{disclaimer3}</p>
+      <div className={styles.button}>
+        <Button>Done!</Button>
+      </div>
+      <div className={styles.note}>{note}</div>
     </Layout>
-  )
+  );
 }
