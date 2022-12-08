@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from './layout.module.scss';
-import Link from 'next/link';
 import Divider from './divider';
 import Footer from './footer';
 
@@ -9,7 +8,7 @@ type Props = {
   children?: React.ReactNode
 }
 
-export const siteTitle = 'Next.js Sample Website';
+const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children }: Props) {
   return (
