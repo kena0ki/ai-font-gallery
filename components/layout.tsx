@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from './layout.module.scss';
 import Divider from './divider';
 import Footer from './footer';
+import Header from './header';
 
 type Props = {
   children?: React.ReactNode
@@ -28,9 +28,7 @@ export default function Layout({ children }: Props) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
-        <Image src="/a_logo1.svg" height="64" width="64" alt="Logo" />
-      </header>
+      <Header/>
       <main className={styles.main}>{children}</main>
       <Divider/>
       <Footer/>

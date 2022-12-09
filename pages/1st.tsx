@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './1st.module.scss';
 import Layout from '../components/layout';
-import Button from '../components/button';
+import Button from '../components/buttons';
 
 export default function Home() {
 
@@ -22,7 +22,7 @@ export default function Home() {
           <Button>Try it!</Button>
         </Link>
       </div>
-      <p>{disclaimer1}<a>{disclaimer2}</a>{disclaimer3}</p>
+      <p className={styles.disclaimer}>{disclaimer1}<a>{disclaimer2}</a>{disclaimer3}</p>
     </Layout>
   );
 }

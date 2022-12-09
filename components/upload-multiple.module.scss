@@ -1,0 +1,17 @@
+.uploadArea {
+  height: 200px;
+  max-width: 300px;
+  padding: 1rem;
+  background-color: var(--image-background-color);
+  border-radius: 2%;
+  border: dotted var(--secondary-border-color);
+  cursor: pointer;
+}
+
+.instruction {
+  font-size: var(--size-medium);
+}
+
+.input {
+  display: none;
+}

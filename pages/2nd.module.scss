@@ -1,15 +1,9 @@
-.uploadArea {
-  height: 200px;
-  max-width: 300px;
-  margin: 2rem 0;
-  padding: 1rem;
-  line-height: 1.5;
-  background-color: var(--image-background-color);
-  border-radius: 2%;
-}
-
-.instruction {
-  font-size: var(--size-medium);
+.menu {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  max-width: 400px;
+  font-size: var(--size-tiny);
 }
 
 .button {
@@ -17,5 +11,6 @@
 }
 
 .note {
+  margin: 1rem 0;
   font-size: var(--size-small);
 }

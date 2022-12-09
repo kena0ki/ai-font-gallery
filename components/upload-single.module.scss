@@ -1,0 +1,36 @@
+.input {
+  display: none;
+}
+
+.container {
+  display: flex;
+  max-width: 500px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image,
+.noImage {
+  height: 100px;
+  width: 100px;
+  margin: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  border-radius: 2%;
+  border: 2px solid var(--primary-border-color);
+}
+
+.noImage {
+  background-color: var(--image-background-color);
+  border-radius: 2%;
+  border: 2px dotted var(--secondary-border-color);
+}
+
+.noImageText {
+  font-size: var(--size-small);
+  margin: auto;
+}

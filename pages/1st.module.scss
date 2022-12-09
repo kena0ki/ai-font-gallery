@@ -15,6 +15,10 @@
   margin: 2rem 0;
 }
 
+.disclaimer {
+  font-size: var(--size-small);
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

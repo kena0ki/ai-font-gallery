@@ -1,0 +1,30 @@
+.primaryButton {
+  border: solid 5px;
+  background-color: var(--background-primary-clor);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-top-left-radius: 70% 100%;
+  border-top-right-radius: 100% 100%;
+  border-bottom-left-radius: 70% 100%;
+  border-bottom-right-radius: 70% 100%;
+  border-color: var(--primary-border-color);
+  font-size: 2rem;
+}
+.primaryButton:hover {
+  border-color: var(--secondary-border-color);
+  box-shadow: 6px 40px 10px -30px var(--shadow-color);
+}
+.primaryButton:active {
+  box-shadow: none;
+}
+
+.ghostButton {
+  background-color: var(--background-primary-clor);
+  border: none;
+  cursor: pointer;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+.ghostButton:hover {
+  color: var(--secondary-border-color);
+}
