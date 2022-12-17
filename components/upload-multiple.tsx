@@ -1,9 +1,11 @@
 import styles from './upload-multiple.module.scss';
 import React, { useRef } from 'react';
 import { HandleFiles } from '../pages/2nd';
+import { NUM_STYLES } from '../util/constants';
 
 type Props = {
   handleFiles: HandleFiles,
+  className?: string,
 }
 
 export const setBorderStyle = (target:EventTarget, style: string) => {
@@ -22,13 +24,13 @@ export const onDragLeave = (evt:React.DragEvent<HTMLElement>) => {
 };
 
 const texts = {
-  instruction:`生成の元となる画像を６枚アップロードしてください`,
+  instruction:`生成の元となる画像を${NUM_STYLES}枚アップロードしてください。`,
 };
 
-export default function UploadMultiple({ handleFiles }: Props) {
+export default function UploadMultiple({ handleFiles, className }: Props) {
   const ref = useRef<HTMLInputElement>(null);
   const { instruction } = texts;
-  return <>
+  return <div className={className} >
     <input type="file" multiple className={styles.input} ref={ref}
       onChange={evt => handleFiles(evt.currentTarget.files??(new FileList()))} />
     <div className={styles.uploadArea}
@@ -44,5 +46,5 @@ export default function UploadMultiple({ handleFiles }: Props) {
     >
       <p className={styles.instruction}>{instruction}</p>
     </div>
-  </>;
+  </div>;
 }

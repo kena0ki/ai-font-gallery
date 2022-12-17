@@ -1,9 +1,12 @@
+import Link from 'next/link';
 import styles from './2nd.module.scss';
 import Layout from '../components/layout';
-import Button, { GhostButton } from '../components/buttons';
-import React, { useState } from 'react';
+import Button from '../components/buttons';
 import UploadSingle from '../components/upload-single';
 import UploadMultiple from '../components/upload-multiple';
+import { EXAMPLE_FONTS, INITIAL_FILES, NUM_STYLES } from '../util/constants';
+import { PageProps } from './_app';
+import { shuffle, toFileChar } from '../util/utils';
 
 export type HandleFiles = (fileList:FileList) => void;
 export type HandleFile = (idx:number,fileList:FileList) => void;
@@ -12,11 +15,7 @@ const texts = {
   note:`学習済みデータの都合上、生成元画像はローマ字の方が精度が高くなります。`,
 };
 
-const INITIAL_FILES=[...Array(6)];
-
-export default function Second() {
-
-  const [files, setFiles] = useState<(File|undefined)[]>(INITIAL_FILES);
+export default function Second({files,setFiles}:PageProps) {
   const {note} = texts;
   const handleFiles:HandleFiles = (fileList) => {
     console.log(fileList);
@@ -27,23 +26,48 @@ export default function Second() {
     console.log(newFiles);
     setFiles(newFiles);
   };
+  const handleExample = async () => {
+    const shuffled = shuffle([...Array(52).keys()]);
+    const chrs = shuffled
+      .map(v=> {
+        const cp = v<=25 ? v+65 : v-26+97;
+        const chr = String.fromCodePoint(cp);
+        return toFileChar(chr);
+      })
+      .slice(0,NUM_STYLES);
+    const exFont = shuffle(EXAMPLE_FONTS)[0];
+    const exFilePromises = chrs.map(async v => {
+      const url = `/example-fonts/${exFont}/${v}.png`;
+      const res = await fetch(url);
+      const buf = await res.arrayBuffer();
+      return new File([buf], v);
+    });
+    const exFiles = await Promise.all(exFilePromises);
+    setFiles(exFiles);
+  };
   const isMult = files.every(v=>v===undefined);
-
+  const done = files.every(v=>v);
   return (
     <Layout>
       <div className={styles.menu}>
         {isMult
-          ?<GhostButton >Example</GhostButton>
-          :<GhostButton onClick={()=>setFiles(INITIAL_FILES)}>Clear</GhostButton>
+          ?<Button uitype="ghost" onClick={handleExample} >Example</Button>
+          :<Button uitype="ghost" onClick={()=>setFiles(INITIAL_FILES)}>Clear</Button>
         }
       </div>
       {isMult
-        ?<UploadMultiple handleFiles={handleFiles} />
+        ?<UploadMultiple className={styles.multipleUploadArea} handleFiles={handleFiles} />
         :<UploadSingle files={files} handleFile={handleFile} />
       }
       <div className={styles.note}>{note}</div>
       <div className={styles.button}>
-        <Button>Done!</Button>
+        {done?
+          <Link href="/3rd">
+            <Button size="big">Done!</Button>
+          </Link>
+          :
+          <Button size="big" disabled >Done!</Button>
+        }
       </div>
     </Layout>
   );

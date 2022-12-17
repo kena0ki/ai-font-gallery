@@ -1,30 +1,51 @@
-.primaryButton {
-  border: solid 5px;
-  background-color: var(--background-primary-clor);
-  padding: 0.5rem 1rem;
+.button {
   cursor: pointer;
+}
+button[disabled].button.disabled {
+  border-color: var(--tertiary-border-color) !important;
+  color: var(--tertiary-text-color);
+  cursor: unset;
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.primary.button {
+  background-color: var(--primary-background-color);
+  border: solid 3px;
+  padding: 0.5rem 1rem;
   border-top-left-radius: 70% 100%;
   border-top-right-radius: 100% 100%;
   border-bottom-left-radius: 70% 100%;
   border-bottom-right-radius: 70% 100%;
   border-color: var(--primary-border-color);
-  font-size: 2rem;
+  font-size: var(--size-medium);
 }
-.primaryButton:hover {
+.primary.button:hover {
   border-color: var(--secondary-border-color);
   box-shadow: 6px 40px 10px -30px var(--shadow-color);
 }
-.primaryButton:active {
+.primary.button:active {
   box-shadow: none;
 }
+.primary.button.medium {
+  font-size: var(--size-medium);
+}
+.primary.button.big {
+  border-width: 5px;
+  padding: 0.5rem 1rem;
+  font-size: var(--size-big);
+}
+.primary.button.big:hover {
+  box-shadow: 6px 40px 10px -30px var(--shadow-color);
+}
 
-.ghostButton {
-  background-color: var(--background-primary-clor);
+.ghost.button {
+  background-color: transparent;
   border: none;
-  cursor: pointer;
   text-decoration-line: underline;
   text-decoration-style: dotted;
 }
-.ghostButton:hover {
+.ghost:hover {
   color: var(--secondary-border-color);
 }

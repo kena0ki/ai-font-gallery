@@ -3,18 +3,18 @@ import Image from 'next/image';
 import styles from './upload-single.module.scss';
 import { setBorderStyle, onDragOver, onDragLeave } from './upload-multiple';
 import type { HandleFile } from '../pages/2nd';
+import { INITIAL_FILES } from '../util/constants';
 
 type Props = {
   files: (File|undefined)[],
   handleFile: HandleFile,
+  className?: string,
 }
 
-const ARRAY = [...Array(6).keys()];
-
-export default function UploadSingle({ files, handleFile }: Props) {
+export default function UploadSingle({ files, handleFile, className }: Props) {
   const refInput = useRef<HTMLInputElement>(null);
   const refIdx = useRef<number|null>(null);
-  return <>
+  return <div className={className} >
     <div className={styles.container}>
       <input type="file" className={styles.input} ref={refInput}
         onChange={evt => {
@@ -23,7 +23,7 @@ export default function UploadSingle({ files, handleFile }: Props) {
           handleFile(idx,fileList);
         }}
       />
-      {ARRAY.map((key,idx) => {
+      {INITIAL_FILES.map((key,idx) => {
         const file = files[idx];
         const clsName = file ? styles.image : styles.noImage;
         const objUrl = file&&URL.createObjectURL(file);
@@ -51,5 +51,5 @@ export default function UploadSingle({ files, handleFile }: Props) {
         );
       })}
     </div>
-  </>;
+  </div>;
 }

@@ -1,8 +1,6 @@
-@import "https://fonts.googleapis.com/css2?family=Neucha&family=Yuji+Boku&display&display=swap";
-
 :root {
-  --size-huge: 4rem;
-  --size-big: 3rem;
+  --size-huge: 3rem;
+  --size-big: 2rem;
   --size-medium: 1.5rem;
   --size-small: 1rem;
   --size-tiny: 0.7rem;
@@ -10,12 +8,15 @@
 
 html {
   --primary-text-color: #000;
-  --secondary-text-color: #000;
+  --secondary-text-color: #555;
+  --tertiary-text-color: #bcbcbc;
   --primary-background-color: #fff;
   --secondary-background-color: #d9d9d9;
   --image-background-color: #f1f1f1;
+  --loader-background-color: #000c;
   --primary-border-color: #000;
-  --secondary-border-color: #bcbcbc;
+  --secondary-border-color: #555;
+  --tertiary-border-color: #bcbcbc;
   --shadow-color: #515151;
   --gradation-color: #fff;
   --outside-color: #111;

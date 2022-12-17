@@ -1,22 +1,19 @@
 import styles from './buttons.module.scss';
 
-type Props = {
-  children?: React.ReactNode,
-  onClick?: React.MouseEventHandler<HTMLButtonElement>,
-}
+type UiType = "primary"|"ghost";
+type Size = "big"|"medium";
+type Props = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>&{ uitype?: UiType, size?: Size };
 
-export default function PrimaryButton({ children, onClick }: Props) {
+export default function Button(p: Props) {
+  const props = { ...p };
+  const cls = [];
+  cls.push(styles[props.uitype||"primary"]);
+  cls.push(styles.button);
+  cls.push(styles[props.size||"medium"]);
+  if (props.disabled) cls.push(styles.disabled);
+  if (props.className) cls.push(props.className);
+  props.className = cls.join(" ");
   return (
-    <button className={styles.primaryButton} onClick={onClick} >
-      {children}
-    </button>
-  );
-}
-
-export function GhostButton({ children, onClick }: Props) {
-  return (
-    <button className={styles.ghostButton} onClick={onClick} >
-      {children}
-    </button>
+    <button {...props}></button>
   );
 }

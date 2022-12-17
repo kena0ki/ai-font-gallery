@@ -19,7 +19,7 @@ export default function Home() {
       <p className={styles.description}>{description}</p>
       <div className={styles.button}>
         <Link href="/2nd">
-          <Button>Try it!</Button>
+          <Button size="big" >Try it!</Button>
         </Link>
       </div>
       <p className={styles.disclaimer}>{disclaimer1}<a>{disclaimer2}</a>{disclaimer3}</p>

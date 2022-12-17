@@ -1,9 +1,8 @@
 .menu {
   display: flex;
   justify-content: right;
-  width: 100%;
-  max-width: 400px;
   font-size: var(--size-tiny);
+  align-self: stretch;
 }
 
 .button {
@@ -13,4 +12,8 @@
 .note {
   margin: 1rem 0;
   font-size: var(--size-small);
+}
+
+.multipleUploadArea {
+  margin: 1rem 0;
 }

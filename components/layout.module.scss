@@ -1,8 +1,8 @@
 .container {
   margin: auto;
   padding: 0 1rem;
-  width: 100%;
-  height: 100vh;
+  /* width: 100%; */
+  min-height: 100vh;
   max-width: 700px;
   /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
   background-color: radial-gradient(35.87% 43.5% at 50% 50%, #fafafa 0%, #f1ece4 100%);
@@ -16,14 +16,14 @@
 }
 
 .main {
-  $main-pad-size: 1rem;
   height: 100%;
   max-width: 500px;
-  width: calc(100% - 2 * $main-pad-size);
+  width: 100%;
   margin: auto;
-  padding: 0 $main-pad-size;
+  padding: 0 1rem;
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }

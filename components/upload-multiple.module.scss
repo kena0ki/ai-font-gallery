@@ -1,10 +1,10 @@
 .uploadArea {
-  height: 200px;
-  max-width: 300px;
+  height: 300px;
+  max-width: 400px;
   padding: 1rem;
   background-color: var(--image-background-color);
   border-radius: 2%;
-  border: dotted var(--secondary-border-color);
+  border: dotted var(--tertiary-border-color);
   cursor: pointer;
 }
 
