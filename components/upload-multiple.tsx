@@ -1,7 +1,7 @@
 import styles from './upload-multiple.module.scss';
 import React, { useRef } from 'react';
 import { HandleFiles } from '../pages/2nd';
-import { NUM_STYLES } from '../util/constants';
+import { NUM_STYLES } from '../utils/constants';
 
 type Props = {
   handleFiles: HandleFiles,

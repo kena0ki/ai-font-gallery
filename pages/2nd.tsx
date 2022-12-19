@@ -4,9 +4,9 @@ import Layout from '../components/layout';
 import Button from '../components/buttons';
 import UploadSingle from '../components/upload-single';
 import UploadMultiple from '../components/upload-multiple';
-import { EXAMPLE_FONTS, INITIAL_FILES, NUM_STYLES } from '../util/constants';
+import { EXAMPLE_FONTS, INITIAL_FILES, NUM_STYLES } from '../utils/constants';
 import { PageProps } from './_app';
-import { shuffle, toFileChar } from '../util/utils';
+import { shuffle, toFileChar } from '../utils/utils';
 
 export type HandleFiles = (fileList:FileList) => void;
 export type HandleFile = (idx:number,fileList:FileList) => void;

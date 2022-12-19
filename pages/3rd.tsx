@@ -5,16 +5,16 @@ import Button from '../components/buttons';
 import Textarea from '../components/textarea';
 import Section from '../components/section';
 import { PageProps } from './_app';
-import { BATCH_SIZE, IMAGE_HEIGHT, IMAGE_WIDTH, MEAN, NUM_CHANNEL, NUM_CHANNEL_GREY, STD } from '../util/constants';
+import { BATCH_SIZE, IMAGE_HEIGHT, IMAGE_WIDTH, MEAN, NUM_CHANNEL, NUM_CHANNEL_GREY, STD } from '../utils/constants';
 import { InferenceSession, Tensor } from 'onnxruntime-web';
 import { potrace, init as potraceInit } from '../node_modules/esm-potrace-wasm/dist/index.js'; // tomayac/esm-potrace-wasm#13
 import * as ReactDOMServer from 'react-dom/server';
 import SvgFontTemplate from '../components/svg-font-template';
-import svg2ttfBuf from '../util/svg2ttfBuf';
+import svg2ttfBuf from '../utils/svg2ttfBuf';
 import { useState } from 'react';
-import { toFileChar } from '../util/utils';
+import { toFileChar } from '../utils/utils';
 import Loader from '../components/loader';
-import { AppError } from '../util/error';
+import { AppError } from '../utils/error';
 
 const MYFONT = "myfont";
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './upload-single.module.scss';
 import { setBorderStyle, onDragOver, onDragLeave } from './upload-multiple';
 import type { HandleFile } from '../pages/2nd';
-import { NUM_STYLES } from '../util/constants';
+import { NUM_STYLES } from '../utils/constants';
 
 type Props = {
   files: (File|undefined)[],
