@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './3rd.module.scss';
 import Layout from '../components/layout';
 import Button from '../components/buttons';
@@ -13,36 +14,79 @@ import svg2ttfBuf from '../util/svg2ttfBuf';
 import { useState } from 'react';
 import { toFileChar } from '../util/utils';
 import Loader from '../components/loader';
+import { AppError } from '../util/error';
 
 const MYFONT = "myfont";
 
+const texts = {
+  instruction:`ここに何か入力してください`,
+  notEnoughFiles:`アップロードされたファイルが不足しています`,
+};
+const errorMessage = {
+  unsupportedChar: (chr:string) => `文字 ${chr} には未対応です`,
+  unknown: "エラーが発生しましたリロードして再度やり直してください",
+};
+
 export default function Third({files}:PageProps) {
 
-  const [inpStr, setInpStr] = useState('あヲ花鳥風月万丈');
+  const [inpStr, setInpStr] = useState(''); // あヲ花鳥風月万丈
+  const [errMsg, setErrMsg] = useState('');
   const [myFontFace, setMyFontFace] = useState<FontFace|null>(null);
   const [progress, setProgress] = useState<number|null>(null);
 
-  const instruction = `ここに何か入力してください`;
+  const { instruction, notEnoughFiles } = texts;
   const onSubmit = async () => {
-    setProgress(0);
-    const glyphPromises = [...inpStr].map(chr => toGlyph(files as File[],chr, setProgress));
-    const glyphs = await Promise.all(glyphPromises);
-    const svgElm = SvgFontTemplate({ fontName:MYFONT, glyphs });
-    const svgFont$ = ReactDOMServer.renderToStaticMarkup(svgElm);
-    const svgFont = svgFont$.replaceAll("&amp;","&"); // since "&" is sanitized by the renderToStaticMarkup method.
-    console.log(svgFont);
-    const ttfBuf = svg2ttfBuf(svgFont);
-    console.log(ttfBuf);
-    const fontFace = new FontFace(MYFONT, ttfBuf);
-    fontFace.load();
-    if (myFontFace) document.fonts.delete(myFontFace);
-    document.fonts.add(fontFace);
-    await document.fonts.ready;
-    setMyFontFace(fontFace);
-    setProgress(null);
+    try {
+      setErrMsg('');
+      setProgress(0);
+      const glyphPromises = [...inpStr].map(chr => toGlyph(files as File[],chr, setProgress));
+      const glyphs = await Promise.all(glyphPromises);
+      console.log(glyphs);
+      const svgElm = SvgFontTemplate({ fontName:MYFONT, glyphs });
+      const svgFont$ = ReactDOMServer.renderToStaticMarkup(svgElm);
+      const svgFont = svgFont$.replaceAll("&amp;","&"); // since "&" is sanitized by the renderToStaticMarkup method.
+      console.log(svgFont);
+      const ttfBuf = svg2ttfBuf(svgFont);
+      console.log(ttfBuf);
+      const fontFace = new FontFace(MYFONT, ttfBuf);
+      fontFace.load();
+      if (myFontFace) document.fonts.delete(myFontFace);
+      document.fonts.add(fontFace);
+      await document.fonts.ready;
+      setMyFontFace(fontFace);
+    } catch(e) {
+      if (e instanceof AppError) {
+        setErrMsg(e.message);
+      } else {
+        setErrMsg(errorMessage.unknown);
+      }
+      throw e;
+    } finally {
+      setProgress(null);
+    }
   };
+  const isNotEnoughFiles = files.some(v=>!v);
+  if (isNotEnoughFiles) {
+    return (
+      <Layout>
+        <div className={styles.notEnoughFilesContainer} >
+          <p className={styles.notEnoughFiles}>{notEnoughFiles}</p>
+          <Link href="/2nd">
+            <Button>Go Back</Button>
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
   return (
     <Layout>
+      {errMsg&&
+        <div className={styles.errorMessageContainer} >
+          <p className={styles.errorMessage} >
+            {errMsg}
+          </p>
+        </div>
+      }
       <div className={styles.textareaContainer} >
         <Textarea className={styles.textarea} value={inpStr} placeholder={instruction}
           onChange={evt=>setInpStr(evt.currentTarget.value)}
@@ -82,6 +126,13 @@ const toGlyph = async (files: File[], chr: string,
   const styleDims = [BATCH_SIZE, files.length, IMAGE_HEIGHT, IMAGE_WIDTH];
   const styleTensor = new Tensor("float32", Float32Array.from(styleNumArray), styleDims);
   const res = await fetch(`./content-images/${toFileChar(chr)}.png`);
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new AppError(errorMessage.unsupportedChar(chr));
+    } else {
+      throw new Error();
+    }
+  }
   const blob = await res.blob();
   const contentDims = [BATCH_SIZE, NUM_CHANNEL_GREY, IMAGE_HEIGHT, IMAGE_WIDTH];
   const contentNumArray = await toFloatNums(blob);
