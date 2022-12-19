@@ -12,7 +12,7 @@ export type HandleFiles = (fileList:FileList) => void;
 export type HandleFile = (idx:number,fileList:FileList) => void;
 
 const texts = {
-  note:`学習済みデータの都合上、生成元画像はローマ字の方が精度が高くなります。`,
+  note:`枚数は${NUM_STYLES}枚、文字はローマ字（A-Z,a-z）のフォント画像をアップロードしてください`,
 };
 
 export default function Second({files,setFiles}:PageProps) {

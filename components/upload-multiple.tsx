@@ -1,7 +1,6 @@
 import styles from './upload-multiple.module.scss';
 import React, { useRef } from 'react';
 import { HandleFiles } from '../pages/2nd';
-import { NUM_STYLES } from '../utils/constants';
 
 type Props = {
   handleFiles: HandleFiles,
@@ -24,7 +23,7 @@ export const onDragLeave = (evt:React.DragEvent<HTMLElement>) => {
 };
 
 const texts = {
-  instruction:`生成の元となる画像を${NUM_STYLES}枚アップロードしてください。`,
+  instruction:`生成元画像をここにアップロードしてください`,
 };
 
 export default function UploadMultiple({ handleFiles, className }: Props) {
