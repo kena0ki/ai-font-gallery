@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './upload-single.module.scss';
 import { setBorderStyle, onDragOver, onDragLeave } from './upload-multiple';
 import type { HandleFile } from '../pages/2nd';
-import { INITIAL_FILES } from '../util/constants';
+import { NUM_STYLES } from '../util/constants';
 
 type Props = {
   files: (File|undefined)[],
@@ -23,12 +23,12 @@ export default function UploadSingle({ files, handleFile, className }: Props) {
           handleFile(idx,fileList);
         }}
       />
-      {INITIAL_FILES.map((key,idx) => {
+      {[...Array(NUM_STYLES).keys()].map(idx => {
         const file = files[idx];
         const clsName = file ? styles.image : styles.noImage;
         const objUrl = file&&URL.createObjectURL(file);
         return (
-          <div key={`${key}-${objUrl}`}
+          <div key={`${idx}-${objUrl}`}
             className={clsName}
             onClick={() => {
               refIdx.current = idx;
