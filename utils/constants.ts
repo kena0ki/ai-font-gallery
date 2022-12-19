@@ -1,4 +1,4 @@
-export const SITE_NAME="AI Font Gallary";
+export const SITE_NAME="AI Font Gallery";
 export const NUM_STYLES=8;
 export const INITIAL_FILES=[...Array(NUM_STYLES)];
 

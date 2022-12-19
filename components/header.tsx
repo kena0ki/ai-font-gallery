@@ -8,7 +8,7 @@ export default function Header() {
       <Link href="/1st">
         <Image src="/logo.svg" height="64" width="64" alt="Logo" />
       </Link>
-      <a target="_blank" rel="noreferrer" href="https://github.com/kena0ki/ai-font-demo">
+      <a target="_blank" rel="noreferrer" href="https://github.com/kena0ki/ai-font-gallery">
         <Image className={styles.octocat} src="/octocat_ghost.svg" height="35" width="35" alt="Logo" />
       </a>
     </header>

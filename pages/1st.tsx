@@ -5,7 +5,7 @@ import Button from '../components/buttons';
 
 export default function Home() {
 
-  const title=`AI Font Gallary`;
+  const title=`AI Font Gallery`;
   const description=
 `AIによるフォント自動生成を試すことができるサイトです。
 生成に必要となるフォント画像は数枚です。`;
