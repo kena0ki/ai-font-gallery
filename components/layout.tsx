@@ -1,7 +1,9 @@
+import Head from 'next/head';
 import styles from './layout.module.scss';
 import Divider from './divider';
 import Footer from './footer';
 import Header from './header';
+import { SITE_NAME } from '../utils/constants';
 
 type Props = {
   children?: React.ReactNode
@@ -10,6 +12,9 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>{SITE_NAME}</title>
+      </Head>
       <Header/>
       <main className={styles.main}>{children}</main>
       <Divider/>
