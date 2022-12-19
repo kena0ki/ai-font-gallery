@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta property="og:image" content="https://example.com/ogp.jpg" />
+        <meta property="og:image" content="https://github.com/kena0ki/ai-font-gallary/blob/main/public/logo_og.png" />
         <meta property="og:image:alt" content="Logo" />
         <meta name="og:title" content={SITE_NAME} />
         <meta name="description" content="Try few-shot font generation models" />
