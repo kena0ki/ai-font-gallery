@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-  <rect x="0.5%" y="0" width="98%" height="99%" filter="url(#paper-texture)"/>
+  <rect x="0%" y="0" width="98%" height="99%" filter="url(#paper-texture)"/>
 
   <defs>
     <filter id="paper-texture" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
