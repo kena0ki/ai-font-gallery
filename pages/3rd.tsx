@@ -36,12 +36,12 @@ export default function Third({files}:PageProps) {
 
   const { instruction, notEnoughFiles } = texts;
   const onSubmit = async () => {
-    if ("serviceWorker" in navigator) {
-      await navigator.serviceWorker.ready;
-    }
     try {
       setErrMsg('');
       setProgress(0);
+      if ("serviceWorker" in navigator) {
+        await navigator.serviceWorker.ready;
+      }
       const glyphPromises = [...inpStr].map(chr => toGlyph(files as File[],chr, setProgress));
       const glyphs = await Promise.all(glyphPromises);
       console.log(glyphs);
