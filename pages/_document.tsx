@@ -10,7 +10,6 @@ export default function Document() {
         <meta name="og:title" content={SITE_NAME} />
         <meta name="description" content="Try few-shot font generation models" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet" />

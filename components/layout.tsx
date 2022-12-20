@@ -13,6 +13,7 @@ export default function Layout({ children }: Props) {
   return (
     <div className={styles.container}>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{SITE_NAME}</title>
       </Head>
       <Header/>

@@ -4,6 +4,9 @@ import '../styles/global.scss';
 import type { AppProps } from 'next/app';
 import { useState } from 'react';
 import { INITIAL_FILES } from '../utils/constants';
+import { registerServiceWorker } from '../utils/sw-registerer';
+
+registerServiceWorker();
 
 export type PageProps = {
   files: (File|undefined)[],

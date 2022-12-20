@@ -36,6 +36,9 @@ export default function Third({files}:PageProps) {
 
   const { instruction, notEnoughFiles } = texts;
   const onSubmit = async () => {
+    if ("serviceWorker" in navigator) {
+      await navigator.serviceWorker.ready;
+    }
     try {
       setErrMsg('');
       setProgress(0);
