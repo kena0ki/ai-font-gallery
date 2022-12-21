@@ -8,8 +8,8 @@ export default function Home() {
   const title=`AI Font Gallery`;
   const description=
 `AIによるフォント自動生成を試すことができるサイトです。
-生成に必要となるフォント画像は数枚です。`;
-  const disclaimer1= `現状では`;
+数枚の文字画像からフォントを生成します`;
+  const disclaimer1= `現状は`;
   const disclaimer2= `FTransGAN`;
   const disclaimer3= `というAIのモデルにより生成を行います。`;
 
