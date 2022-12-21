@@ -40,7 +40,14 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  const deleteOldCaches = async () => {
+    const cacheKeepList = [CACHE_VERSION];
+    const keyList = await caches.keys();
+    const cachesToDelete = keyList.filter((key) => !cacheKeepList.includes(key));
+    await Promise.all(cachesToDelete.map(async (key) => caches.delete(key)));
+  };
   event.waitUntil(Promise.all([
+    deleteOldCaches(),
     self.clients.claim(),
   ]));
 });
