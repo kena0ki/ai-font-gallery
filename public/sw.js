@@ -1,10 +1,5 @@
 const CACHE_VERSION = "v1";
 
-const addResourcesToCache = async (resources) => {
-  const cache = await caches.open(CACHE_VERSION);
-  await cache.addAll(resources);
-};
-
 const putInCache = async (request, response) => {
   if (response.status >= 400 ||
       !/wasm$|onnx$/.test(request.url)) {
@@ -14,20 +9,12 @@ const putInCache = async (request, response) => {
   await cache.put(request, response);
 };
 
-const cacheFirst = async ({ request, preloadResponsePromise }) => {
+const cacheFirst = async ({ request }) => {
   // First try to get the resource from the cache
   const responseFromCache = await caches.match(request);
   if (responseFromCache) {
-    console.log('using cache');
+    console.log('using cache for',request.url);
     return responseFromCache;
-  }
-
-  // Next try to use the preloaded response, if it's there
-  const preloadResponse = await preloadResponsePromise;
-  if (preloadResponse) {
-    console.log('using preload response', preloadResponse);
-    putInCache(request, preloadResponse.clone());
-    return preloadResponse;
   }
 
   // Next try to get the resource from the network
@@ -39,35 +26,27 @@ const cacheFirst = async ({ request, preloadResponsePromise }) => {
   return responseFromNetwork;
 };
 
-const enableNavigationPreload = async () => {
-  if (self.registration.navigationPreload) {
-    // Enable navigation preloads!
-    await self.registration.navigationPreload.enable();
-  }
-};
-
 self.addEventListener('install', (event) => {
-  event.waitUntil(Promise.all([
-    addResourcesToCache([
+  const addResourcesToCache = async () => {
+    const cache = await caches.open(CACHE_VERSION);
+    await cache.addAll([
       '/FTransGAN.onnx',
-    ]),
+    ]);
+  };
+  event.waitUntil(Promise.all([
+    addResourcesToCache(),
     self.skipWaiting(),
   ]));
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(Promise.all([
-    enableNavigationPreload(),
     self.clients.claim(),
   ]));
-  event.waitUntil(enableNavigationPreload());
 });
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    cacheFirst({
-      request: event.request,
-      preloadResponsePromise: event.preloadResponse,
-    })
+    cacheFirst({ request: event.request })
   );
 });
