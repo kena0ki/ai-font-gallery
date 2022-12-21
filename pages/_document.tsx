@@ -5,11 +5,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta property="og:image" content="https://raw.githubusercontent.com/kena0ki/ai-font-gallery/main/public/logo_og.png" />
-        <meta property="og:image:alt" content="Logo" />
+        <meta name="og:image" content="https://raw.githubusercontent.com/kena0ki/ai-font-gallery/main/public/logo_og.png" />
+        <meta name="og:image:alt" content="Logo" />
         <meta name="og:title" content={SITE_NAME} />
-        <meta name="description" content="Try few-shot font generation models" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="og:description" content="Try few-shot font generation models" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet" />
