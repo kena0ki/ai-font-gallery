@@ -2,9 +2,7 @@ import { createContext, useContext } from 'react';
 import { NUM_STYLES } from '../utils/constants';
 import { FilteredKeys } from '../utils/type-utils';
 
-const navlang = typeof navigator === 'undefined'?  null : navigator.language.slice(0,2);
-export const INI_LANG = navlang==='ja'? 'JA' : 'EN' as const;
-export const LanguageContext = createContext<LanguageUnion>(INI_LANG);
+export const LanguageContext = createContext<LanguageUnion>('EN');
 
 export const useLanguage = () => {
   const lang = useContext(LanguageContext);

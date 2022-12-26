@@ -8,17 +8,17 @@ import { PageProps } from '../pages/_app';
 
 type Props = {
   children?: React.ReactNode
-  setLang: PageProps['setLang'],
+  changeLang: PageProps['changeLang'],
 }
 
-export default function Layout({ children, setLang }: Props) {
+export default function Layout({ children, changeLang }: Props) {
   return (
     <div className={styles.container}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{SITE_NAME}</title>
       </Head>
-      <Header setLang={setLang}/>
+      <Header changeLang={changeLang}/>
       <main className={styles.main}>{children}</main>
       <Divider/>
       <Footer/>

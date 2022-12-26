@@ -3,20 +3,20 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import { PageProps } from '../pages/_app';
 import styles from './header.module.scss';
-import { LanguageContext, LANGUAGES } from './language-context';
+import { LanguageContext, LANGUAGES, LanguageUnion } from './language-context';
 
 type Props ={
-  setLang: PageProps['setLang'],
+  changeLang: PageProps['changeLang'],
 }
 
-export default function Header({ setLang }: Props) {
+export default function Header({ changeLang }: Props) {
   const lang = useContext(LanguageContext);
   return (
     <header className={styles.header}>
       <Link href="/1st">
         <Image src="/logo.svg" height="64" width="64" alt="Logo" />
       </Link>
-      <select value={lang} onChange={evt => setLang(evt.currentTarget.value)}>
+      <select value={lang} onChange={evt => changeLang(evt.currentTarget.value as LanguageUnion)}>
         {
           LANGUAGES.map(l=> (
             <option key={l} value={l}>{l}</option>

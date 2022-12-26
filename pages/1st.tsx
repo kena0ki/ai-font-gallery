@@ -7,11 +7,11 @@ import { PageProps } from './_app';
 
 const {first: K} = TXTKEYTABLE;
 
-export default function Home({ setLang }: PageProps) {
+export default function Home({ changeLang }: PageProps) {
   const getT = useLanguage();
 
   return (
-    <Layout setLang={setLang}>
+    <Layout changeLang={changeLang}>
       <h1 className={styles.title}>{getT(K.title)}</h1>
       <p className={styles.description}>{getT(K.description)}</p>
       <div className={styles.button}>

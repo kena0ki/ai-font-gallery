@@ -13,7 +13,7 @@ export type HandleFiles = (fileList:FileList) => void;
 export type HandleFile = (idx:number,fileList:FileList) => void;
 
 
-export default function Second({files,setFiles,setLang}:PageProps) {
+export default function Second({files,setFiles,changeLang}:PageProps) {
   const { second: K } = TXTKEYTABLE;
   const getT = useLanguage();
   const handleFiles:HandleFiles = (fileList) => {
@@ -47,7 +47,7 @@ export default function Second({files,setFiles,setLang}:PageProps) {
   const isMult = files.every(v=>v===undefined);
   const done = files.every(v=>v);
   return (
-    <Layout setLang={setLang}>
+    <Layout changeLang={changeLang}>
       <div className={styles.menu}>
         {isMult
           ?<Button uitype="ghost" onClick={handleExample} >Example</Button>

@@ -19,7 +19,7 @@ import { TXTKEYTABLE, useLanguage } from '../components/language-context';
 
 const MYFONT = "myfont";
 
-export default function Third({files, setLang}:PageProps) {
+export default function Third({files, changeLang}:PageProps) {
 
   const [inpStr, setInpStr] = useState(''); // あヲ花鳥風月万丈
   const [errMsg, setErrMsg] = useState('');
@@ -65,7 +65,7 @@ export default function Third({files, setLang}:PageProps) {
   const isNotEnoughFiles = files.some(v=>!v);
   if (isNotEnoughFiles) {
     return (
-      <Layout setLang={setLang}>
+      <Layout changeLang={changeLang}>
         <div className={styles.notEnoughFilesContainer} >
           <p className={styles.notEnoughFiles}>{getT(K.notEnoughFiles)}</p>
           <Link href="/2nd">
@@ -76,7 +76,7 @@ export default function Third({files, setLang}:PageProps) {
     );
   }
   return (
-    <Layout setLang={setLang}>
+    <Layout changeLang={changeLang}>
       {errMsg&&
         <div className={styles.errorMessageContainer} >
           <p className={styles.errorMessage} >
