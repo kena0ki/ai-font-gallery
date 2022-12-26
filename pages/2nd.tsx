@@ -7,16 +7,15 @@ import UploadMultiple from '../components/upload-multiple';
 import { EXAMPLE_FONTS, INITIAL_FILES, NUM_STYLES } from '../utils/constants';
 import { PageProps } from './_app';
 import { shuffle, toFileChar } from '../utils/utils';
+import { TXTKEYTABLE, useLanguage } from '../components/language-context';
 
 export type HandleFiles = (fileList:FileList) => void;
 export type HandleFile = (idx:number,fileList:FileList) => void;
 
-const texts = {
-  note:`ローマ字（A-Z,a-z）の画像を、${NUM_STYLES}枚アップロードしてください。`,
-};
 
-export default function Second({files,setFiles}:PageProps) {
-  const {note} = texts;
+export default function Second({files,setFiles,setLang}:PageProps) {
+  const { second: K } = TXTKEYTABLE;
+  const getT = useLanguage();
   const handleFiles:HandleFiles = (fileList) => {
     console.log(fileList);
     setFiles([...fileList, ...files.slice(fileList.length)]);
@@ -48,7 +47,7 @@ export default function Second({files,setFiles}:PageProps) {
   const isMult = files.every(v=>v===undefined);
   const done = files.every(v=>v);
   return (
-    <Layout>
+    <Layout setLang={setLang}>
       <div className={styles.menu}>
         {isMult
           ?<Button uitype="ghost" onClick={handleExample} >Example</Button>
@@ -59,7 +58,7 @@ export default function Second({files,setFiles}:PageProps) {
         ?<UploadMultiple className={styles.multipleUploadArea} handleFiles={handleFiles} />
         :<UploadSingle files={files} handleFile={handleFile} />
       }
-      <div className={styles.note}>{note}</div>
+      <div className={styles.note}>{getT(K.note)}</div>
       <div className={styles.button}>
         {done?
           <Link href="/3rd">

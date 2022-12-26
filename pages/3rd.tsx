@@ -15,26 +15,19 @@ import { useState } from 'react';
 import { toFileChar } from '../utils/utils';
 import Loader from '../components/loader';
 import { AppError } from '../utils/error';
+import { TXTKEYTABLE, useLanguage } from '../components/language-context';
 
 const MYFONT = "myfont";
 
-const texts = {
-  instruction:`ここに何か入力してください`,
-  notEnoughFiles:`アップロードされたファイルが不足しています`,
-};
-const errorMessage = {
-  unsupportedChar: (chr:string) => `文字 ${chr} には未対応です`,
-  unknown: "エラーが発生しましたリロードして再度やり直してください",
-};
-
-export default function Third({files}:PageProps) {
+export default function Third({files, setLang}:PageProps) {
 
   const [inpStr, setInpStr] = useState(''); // あヲ花鳥風月万丈
   const [errMsg, setErrMsg] = useState('');
   const [myFontFace, setMyFontFace] = useState<FontFace|null>(null);
-  const [progress, setProgress] = useState<number|null>(null);
+  const [progress, setProgress] = useState<number>();
+  const { third: K } = TXTKEYTABLE;
+  const getT = useLanguage();
 
-  const { instruction, notEnoughFiles } = texts;
   const onSubmit = async () => {
     try {
       setErrMsg('');
@@ -42,7 +35,7 @@ export default function Third({files}:PageProps) {
       if ("serviceWorker" in navigator) {
         await navigator.serviceWorker.ready;
       }
-      const glyphPromises = [...inpStr].map(chr => toGlyph(files as File[],chr, setProgress));
+      const glyphPromises = [...inpStr].map(chr => toGlyph(chr,files,setProgress,K,getT));
       const glyphs = await Promise.all(glyphPromises);
       console.log(glyphs);
       const svgElm = SvgFontTemplate({ fontName:MYFONT, glyphs });
@@ -61,19 +54,20 @@ export default function Third({files}:PageProps) {
       if (e instanceof AppError) {
         setErrMsg(e.message);
       } else {
-        setErrMsg(errorMessage.unknown);
+        setErrMsg(getT(K.unknownError));
       }
       throw e;
     } finally {
-      setProgress(null);
+      setProgress(undefined);
     }
   };
+
   const isNotEnoughFiles = files.some(v=>!v);
   if (isNotEnoughFiles) {
     return (
-      <Layout>
+      <Layout setLang={setLang}>
         <div className={styles.notEnoughFilesContainer} >
-          <p className={styles.notEnoughFiles}>{notEnoughFiles}</p>
+          <p className={styles.notEnoughFiles}>{getT(K.notEnoughFiles)}</p>
           <Link href="/2nd">
             <Button>Go Back</Button>
           </Link>
@@ -82,7 +76,7 @@ export default function Third({files}:PageProps) {
     );
   }
   return (
-    <Layout>
+    <Layout setLang={setLang}>
       {errMsg&&
         <div className={styles.errorMessageContainer} >
           <p className={styles.errorMessage} >
@@ -91,7 +85,7 @@ export default function Third({files}:PageProps) {
         </div>
       }
       <div className={styles.textareaContainer} >
-        <Textarea className={styles.textarea} value={inpStr} placeholder={instruction}
+        <Textarea className={styles.textarea} value={inpStr} placeholder={getT(K.instruction)}
           onChange={evt=>setInpStr(evt.currentTarget.value)}
         />
       </div>
@@ -107,22 +101,74 @@ export default function Third({files}:PageProps) {
           </div>
         </>}
       </>}
-      <Loader loading={progress!=null} width="5rem" height="5rem"
+      <Loader loading={progress!=undefined} width="5rem" height="5rem"
         message={`${Math.floor(((progress??0)/[...inpStr].length)*100)} %`} />
     </Layout>
   );
 }
 
-const reshape = (data:Uint8ClampedArray): number[][] => {
-  const ini = [...Array(NUM_CHANNEL)].map<number[]>(()=>[]);
-  return data.reduce((pre,cur,i) => {
-    pre[i%NUM_CHANNEL].push(cur);
-    return pre;
-  },ini);
-};
+const toGlyph = async (chr: string, files: (File|undefined)[],
+  setProgress: ReturnType<typeof useState<number>>[1],
+  K: typeof TXTKEYTABLE.third, getT: ReturnType<typeof useLanguage>) => {
 
-const toGlyph = async (files: File[], chr: string,
-  setProgress: React.Dispatch<React.SetStateAction<number|null>>) => {
+  const toFloatNums = async (blob: Blob): Promise<number[]> => {
+    const createImageElement = (blob:Blob): Promise<HTMLImageElement> => {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(blob);
+      const promise = new Promise<HTMLImageElement>(resolve => {
+        img.onload = () => {
+          resolve(img);
+        };
+      });
+      return promise;
+    };
+    const img = await createImageElement(blob);
+    const canvas = document.createElement('canvas');
+    canvas.height = IMAGE_HEIGHT;
+    canvas.width = IMAGE_WIDTH;
+    const ctx = canvas.getContext('2d')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    ctx.drawImage(img,0,0,IMAGE_HEIGHT,IMAGE_WIDTH);
+    //{
+    //  const body = document.querySelector("body") as HTMLElement;
+    //  const im = document.createElement("img");
+    //  im.src = canvas.toDataURL();
+    //  body.appendChild(im);
+    //}
+    const imageData = ctx.getImageData(0,0,IMAGE_HEIGHT,IMAGE_WIDTH);
+    const reshape = (data:Uint8ClampedArray): number[][] => {
+      const ini = [...Array(NUM_CHANNEL)].map<number[]>(()=>[]);
+      return data.reduce((pre,cur,i) => {
+        pre[i%NUM_CHANNEL].push(cur);
+        return pre;
+      },ini);
+    };
+    const channels = reshape(imageData.data);
+    const floatArray = Array<number>(IMAGE_HEIGHT*IMAGE_WIDTH);
+    for(let i=0; i<IMAGE_HEIGHT*IMAGE_WIDTH; i++) {
+      const isTransparant = channels[3][i]===0;
+      if (isTransparant) {
+        floatArray[i] = 1;
+      } else {
+        let val = channels[0][i];
+        val = val / 255; // convert to float
+        val = (val - MEAN) / STD; // normalize
+        floatArray[i] = val;
+      }
+    }
+    //if (blob instanceof File) {
+    //  let str="";
+    //  for(let i=0; i<IMAGE_HEIGHT; i++) {
+    //    for(let j=0; j<IMAGE_WIDTH; j++) {
+    //      const val = floatArray[i*IMAGE_WIDTH+j] + 1;
+    //      str += val.toFixed(2) + " ";
+    //    }
+    //    str+="\n";
+    //  }
+    //  console.log(blob.name);
+    //  console.log(str);
+    //}
+    return floatArray;
+  };
   const promises = files.map(file => toFloatNums(file!)); // eslint-disable-line @typescript-eslint/no-non-null-assertion
   const styleNumArrays = await Promise.all(promises);
   const styleNumArray = styleNumArrays.reduce((pre,cur) => pre.concat(cur));
@@ -131,7 +177,7 @@ const toGlyph = async (files: File[], chr: string,
   const res = await fetch(`./content-images/${toFileChar(chr)}.png`);
   if (!res.ok) {
     if (res.status === 404) {
-      throw new AppError(errorMessage.unsupportedChar(chr));
+      throw new AppError(getT(K.unsupportedChar)(chr));
     } else {
       throw new Error();
     }
@@ -147,6 +193,25 @@ const toGlyph = async (files: File[], chr: string,
   feeds[session.inputNames[1]] = styleTensor;
   const outputData = await session.run(feeds);
   const output = outputData[session.outputNames[0]];
+  const toImage = (array: Float32Array): HTMLCanvasElement => {
+    const imageData = new ImageData(IMAGE_HEIGHT,IMAGE_WIDTH);
+    console.log('iamgeData length:',imageData.data.length);
+    for(let i=0; i<IMAGE_HEIGHT*IMAGE_WIDTH; i++) {
+      let val = array[i];
+      val = (val * STD) + MEAN; // normalize back
+      val = Math.floor((val * 255)); // convert to uint
+      for(let j=0; j<NUM_CHANNEL-1; j++) {
+        imageData.data[NUM_CHANNEL*i+j]=val;
+      }
+      imageData.data[NUM_CHANNEL*(i+1)-1]=255;
+    }
+    const canvas = document.createElement('canvas');
+    canvas.height = IMAGE_HEIGHT;
+    canvas.width = IMAGE_WIDTH;
+    const ctx = canvas.getContext('2d')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    ctx.putImageData(imageData,0,0);
+    return canvas;
+  };
   const canvas = toImage(output.data as Float32Array);
   //{
   //  const body = document.querySelector("body") as HTMLElement;
@@ -160,77 +225,4 @@ const toGlyph = async (files: File[], chr: string,
   const unicode = chr.codePointAt(0)!.toString(16); // eslint-disable-line @typescript-eslint/no-non-null-assertion
   setProgress(v=>(v??0)+1);
   return { name: chr, unicode, d };
-};
-
-const toFloatNums = async (blob: Blob): Promise<number[]> => {
-  const img = await createImageElement(blob);
-  const canvas = document.createElement('canvas');
-  canvas.height = IMAGE_HEIGHT;
-  canvas.width = IMAGE_WIDTH;
-  const ctx = canvas.getContext('2d')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
-  ctx.drawImage(img,0,0,IMAGE_HEIGHT,IMAGE_WIDTH);
-  //{
-  //  const body = document.querySelector("body") as HTMLElement;
-  //  const im = document.createElement("img");
-  //  im.src = canvas.toDataURL();
-  //  body.appendChild(im);
-  //}
-  const imageData = ctx.getImageData(0,0,IMAGE_HEIGHT,IMAGE_WIDTH);
-  const channels = reshape(imageData.data);
-  const floatArray = Array<number>(IMAGE_HEIGHT*IMAGE_WIDTH);
-  for(let i=0; i<IMAGE_HEIGHT*IMAGE_WIDTH; i++) {
-    const isTransparant = channels[3][i]===0;
-    if (isTransparant) {
-      floatArray[i] = 1;
-    } else {
-      let val = channels[0][i];
-      val = val / 255; // convert to float
-      val = (val - MEAN) / STD; // normalize
-      floatArray[i] = val;
-    }
-  }
-  //if (blob instanceof File) {
-  //  let str="";
-  //  for(let i=0; i<IMAGE_HEIGHT; i++) {
-  //    for(let j=0; j<IMAGE_WIDTH; j++) {
-  //      const val = floatArray[i*IMAGE_WIDTH+j] + 1;
-  //      str += val.toFixed(2) + " ";
-  //    }
-  //    str+="\n";
-  //  }
-  //  console.log(blob.name);
-  //  console.log(str);
-  //}
-  return floatArray;
-};
-
-const createImageElement = (blob:Blob): Promise<HTMLImageElement> => {
-  const img = document.createElement('img');
-  img.src = URL.createObjectURL(blob);
-  const promise = new Promise<HTMLImageElement>(resolve => {
-    img.onload = () => {
-      resolve(img);
-    };
-  });
-  return promise;
-};
-
-const toImage = (array: Float32Array): HTMLCanvasElement => {
-  const imageData = new ImageData(IMAGE_HEIGHT,IMAGE_WIDTH);
-  console.log('iamgeData length:',imageData.data.length);
-  for(let i=0; i<IMAGE_HEIGHT*IMAGE_WIDTH; i++) {
-    let val = array[i];
-    val = (val * STD) + MEAN; // normalize back
-    val = Math.floor((val * 255)); // convert to uint
-    for(let j=0; j<NUM_CHANNEL-1; j++) {
-      imageData.data[NUM_CHANNEL*i+j]=val;
-    }
-    imageData.data[NUM_CHANNEL*(i+1)-1]=255;
-  }
-  const canvas = document.createElement('canvas');
-  canvas.height = IMAGE_HEIGHT;
-  canvas.width = IMAGE_WIDTH;
-  const ctx = canvas.getContext('2d')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
-  ctx.putImageData(imageData,0,0);
-  return canvas;
 };

@@ -1,6 +1,7 @@
 import styles from './upload-multiple.module.scss';
 import React, { useRef } from 'react';
 import { HandleFiles } from '../pages/2nd';
+import { TXTKEYTABLE, useLanguage } from './language-context';
 
 type Props = {
   handleFiles: HandleFiles,
@@ -22,13 +23,10 @@ export const onDragLeave = (evt:React.DragEvent<HTMLElement>) => {
   setBorderStyle(evt.currentTarget,"");
 };
 
-const texts = {
-  instruction:`生成元画像をここにアップロードしてください`,
-};
-
 export default function UploadMultiple({ handleFiles, className }: Props) {
+  const { second: K } = TXTKEYTABLE;
+  const getT = useLanguage();
   const ref = useRef<HTMLInputElement>(null);
-  const { instruction } = texts;
   return <div className={className} >
     <input type="file" multiple className={styles.input} ref={ref}
       onChange={evt => handleFiles(evt.currentTarget.files??(new FileList()))} />
@@ -43,7 +41,7 @@ export default function UploadMultiple({ handleFiles, className }: Props) {
       onDragLeave={onDragLeave}
       onPaste={evt => handleFiles(evt.clipboardData.files)}
     >
-      <p className={styles.instruction}>{instruction}</p>
+      <p className={styles.instruction}>{getT(K.instruction)}</p>
     </div>
   </div>;
 }
