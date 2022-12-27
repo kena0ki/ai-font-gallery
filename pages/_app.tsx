@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
   },[lang,changeLang]);
   return (
     <LanguageContext.Provider value={lang||'EN'}>
-      <Component {...pageProps} files={files} setFiles={setFiles} changeLang={changeLang} />;
+      <Component {...pageProps} files={files} setFiles={setFiles} changeLang={changeLang} />
     </LanguageContext.Provider>
   );
 }
