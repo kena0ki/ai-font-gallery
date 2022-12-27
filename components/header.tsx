@@ -24,7 +24,7 @@ export default function Header({ changeLang }: Props) {
           onChange={evt => changeLang(evt.currentTarget.value as LanguageUnion)}>
           {
             LANGUAGES.map(l=> (
-              <option key={l} value={l}>{l}</option>
+              <option key={l} value={l}>{l.charAt(0)+l.charAt(1).toLowerCase()}</option>
             ))
           }
         </Select>

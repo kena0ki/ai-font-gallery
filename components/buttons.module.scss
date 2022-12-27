@@ -21,6 +21,7 @@ button[disabled].button.disabled {
   border-bottom-right-radius: 70% 100%;
   border-color: var(--primary-border-color);
   font-size: var(--size-medium);
+  font-family: var(--font-title);
 }
 .primary.button:hover {
   border-color: var(--secondary-border-color);

@@ -4,6 +4,8 @@
   --size-medium: 1.5rem;
   --size-small: 1rem;
   --size-tiny: 0.7rem;
+  --font-title: "Yuji Boku";
+  --font-text: "Yomogi";
 }
 
 html {
@@ -29,6 +31,6 @@ body {
 }
 
 * {
-  font-family: "Yuji Boku", sans-serif;
+  font-family: var(--font-text), sans-serif;
   white-space: pre-wrap;
 }

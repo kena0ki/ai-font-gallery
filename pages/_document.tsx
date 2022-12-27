@@ -28,7 +28,7 @@ export default function Document() {
         <meta property="og:description" content="Try few-shot font generation models" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Yuji+Boku&display=swap" rel="stylesheet" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
