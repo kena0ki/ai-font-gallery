@@ -22,26 +22,6 @@ export const useLanguage = () => {
 
 export const LANGUAGES = ['EN','JA'] as const;
 export type LanguageUnion = typeof LANGUAGES[number];
-//const TEXTKEYS = [
-//  'I101',
-//  'I102',
-//  'I103',
-//  'I104',
-//  'I105',
-//  'I201',
-//  'I202',
-//  'I301',
-//  'I302',
-//  'E301',
-//  'E302',
-//] as const;
-//type TextKeyUnion = typeof TEXTKEYS[number];
-//type TextTableValueType = string;// | ((...args:[string]) => string);
-//type TextTableType = {
-//  [key in LanguageUnion]: {
-//    [key in TextKeyUnion]: TextTableValueType
-//  }
-//};
 const TEXTTABLE = {
   EN: {
     I101: `AI Font Gallery`,
@@ -54,6 +34,8 @@ It can generate a font from a few character images.`,
     I202: `Upload character images here.`,
     I301: `Type some words here.`,
     I302: `Not enough character images were uploaded.`,
+    I303: `Input characters`,
+    I304: `Characters using the generated font`,
     E301: (chr:string) => `Unsupported character, ${chr}, was found.`,
     E302: "Sorry, something went wrong. Please try reloading and trying again.",
   },
@@ -68,6 +50,8 @@ It can generate a font from a few character images.`,
     I202: `生成元画像をここにアップロードしてください`,
     I301: `ここに何か入力してください`,
     I302: `アップロードされたファイルが不足しています`,
+    I303: `入力文字列`,
+    I304: `生成フォント適用済み文字列`,
     E301: (chr:string) => `文字 ${chr} には未対応です`,
     E302: "エラーが発生しましたリロードして再度やり直してください",
   },
@@ -89,6 +73,8 @@ export const TXTKEYTABLE = {
   third: {
     instruction: 'I301', //`ここに何か入力してください`,
     notEnoughFiles: 'I302', //`アップロードされたファイルが不足しています`,
+    labelInput: 'I303', //`入力文字列`,
+    labelOutput: 'I304', //`生成されたフォントを使用した文字列`,
     unsupportedChar: 'E301', //(chr:string) => `文字 ${chr} には未対応です`,
     unknownError: 'E302', //"エラーが発生しましたリロードして再度やり直してください",
   }

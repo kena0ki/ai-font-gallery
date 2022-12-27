@@ -85,23 +85,26 @@ export default function Third({files, changeLang}:PageProps) {
         </div>
       }
       <div className={styles.textareaContainer} >
+        <div className={styles.label}>{getT(K.labelInput)}</div>
         <Textarea className={styles.textarea} value={inpStr} placeholder={getT(K.instruction)}
           onChange={evt=>setInpStr(evt.currentTarget.value)}
         />
       </div>
-      {inpStr&&<>
-        <div className={styles.buttonContainer} >
-          <Button onClick={onSubmit} >Submit!</Button>
-        </div>
-        {myFontFace&&<>
-          <div className={styles.sectionContainer} >
-            <Section className={styles.section}>
-              {inpStr}
-            </Section>
-          </div>
-        </>}
-      </>}
-      <Loader loading={progress!=undefined} width="5rem" height="5rem"
+      <div className={styles.buttonContainer} >
+        <Button onClick={onSubmit} disabled={!inpStr} >Submit!</Button>
+      </div>
+      {myFontFace&&<>
+      <div className={styles.sectionContainer} >
+        <div className={styles.label}>{getT(K.labelOutput)}</div>
+        <Section className={styles.section}>
+          {inpStr}
+        </Section>
+      </div>
+      <div className={styles.yay}>
+        <span>Yay!!</span>
+        <span className={styles.yayFace}>{` v('ω')v`}</span>
+      </div>
+      </>} <Loader loading={progress!=undefined} width="5rem" height="5rem"
         message={`${Math.floor(((progress??0)/[...inpStr].length)*100)} %`} />
     </Layout>
   );
