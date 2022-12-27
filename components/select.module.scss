@@ -1,0 +1,21 @@
+.select {
+  appearance: none;
+  outline: none;
+  background-color: var(--primary-background-color);
+  border-style: solid;
+  padding: 0.3rem 0.1rem;
+  border-top-left-radius: 90% 100%;
+  border-top-right-radius: 100% 100%;
+  border-bottom-left-radius: 90% 100%;
+  border-bottom-right-radius: 90% 100%;
+  border-color: var(--primary-border-color);
+  cursor: pointer;
+}
+.select.medium {
+  font-size: var(--size-medium);
+  border-width: 3px;
+}
+.select.small {
+  font-size: var(--size-small);
+  border-width: 1px;
+}

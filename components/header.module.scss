@@ -9,3 +9,16 @@
 .octocat {
   rotate: -20deg;
 }
+
+.headerLeft,
+.headerRight {
+  flex-grow: 1;
+  display: flex;
+}
+.headerRight {
+  justify-content: end;
+  align-items: center;
+}
+.lang {
+  margin: 0 1rem;
+}
