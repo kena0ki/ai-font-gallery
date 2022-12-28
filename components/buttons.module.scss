@@ -45,6 +45,8 @@ button[disabled].button.disabled {
 .ghost.button {
   background-color: transparent;
   border: none;
+  padding: 0;
+  line-height: 1.2;
   text-decoration-line: underline;
   text-decoration-style: dotted;
 }

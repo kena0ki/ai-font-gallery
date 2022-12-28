@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.leftMargin}></div>
       <div className={styles.signature}>
-        Made by
+        {"Made by "}
         <a target="_blank" rel="noreferrer" href="https://github.com/kena0ki">
           <Button uitype="ghost">kena0ki</Button>
         </a>
