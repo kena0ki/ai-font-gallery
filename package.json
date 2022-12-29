@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "cat onnx/FTransGAN.onnx.01 onnx/FTransGAN.onnx.02 > public/FTransGAN.onnx",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
