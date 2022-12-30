@@ -27,6 +27,7 @@ export default function Third({files, changeLang}:PageProps) {
   const [progress, setProgress] = useState<number>();
   const { third: K } = TXTKEYTABLE;
   const getT = useLanguage();
+  const uniqChrs = Array.from(new Set([...inpStr]));
 
   const onSubmit = async () => {
     try {
@@ -35,7 +36,7 @@ export default function Third({files, changeLang}:PageProps) {
       if ("serviceWorker" in navigator) {
         await navigator.serviceWorker.ready;
       }
-      const glyphPromises = [...inpStr].map(chr => toGlyph(chr,files,setProgress,K,getT));
+      const glyphPromises = uniqChrs.map(chr => toGlyph(chr,files,setProgress,K,getT));
       const glyphs = await Promise.all(glyphPromises);
       console.log(glyphs);
       const svgElm = SvgFontTemplate({ fontName:MYFONT, glyphs });
@@ -105,7 +106,7 @@ export default function Third({files, changeLang}:PageProps) {
         <span className={styles.yayFace}>{` v('ω')v`}</span>
       </div>
       </>} <Loader loading={progress!=undefined} width="5rem" height="5rem"
-        message={`${Math.floor(((progress??0)/[...inpStr].length)*100)} %`} />
+        message={`${Math.floor(((progress??0)/uniqChrs.length)*100)} %`} />
     </Layout>
   );
 }
