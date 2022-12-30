@@ -27,7 +27,7 @@ const TEXTTABLE = {
     I101: `AI Font Gallery`,
     I102: `You can try generating fonts using AI models.
 It can generate a font from a few character images.`,
-    I103: `Currently, the site uses the AI model named `,
+    I103: `Currently, the site uses an AI model named `,
     I104: `FTransGAN`,
     I105: `.`,
     I201: `Upload ${NUM_STYLES} character images. The characters need to be latin alphabets.`,

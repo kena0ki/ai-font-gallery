@@ -16,7 +16,7 @@ export default function Header({ changeLang }: Props) {
     <header className={styles.header}>
       <div className={styles.headerLeft}>
         <Link href="/1st">
-          <Image src="/logo_wavy.svg" height="64" width="64" alt="Logo" />
+          <Image src="/logo.svg" height="64" width="64" alt="Logo" />
         </Link>
       </div>
       <div className={styles.headerRight}>
