@@ -1,16 +1,30 @@
-.container {
+.wood {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.paperContainer {
   margin: auto;
-  padding: 0 1rem;
-  /* width: 100%; */
   min-height: 100vh;
   max-width: 700px;
   /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
   background-color: radial-gradient(35.87% 43.5% at 50% 50%, #fafafa 0%, #f1ece4 100%);
-  background-image: url("/paper-texture.svg");
-  /*
-  box-shadow: 4px 4px 4px rgb(0 0 0 / 25%);
-  border-radius: 23px;
-  */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.paper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.container {
+  padding: 0 1rem;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
